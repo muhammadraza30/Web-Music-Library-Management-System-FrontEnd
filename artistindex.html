@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Musicloud</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="Styles/generalstyle.css">
+  <link rel="stylesheet" href="Styles/artiststyle.css">
+  <link rel="stylesheet" href="Styles/common.css">
+  <link rel="stylesheet" href="Styles/songs.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <img class="logo" src="Images/musicloud.png">
+    <nav class="navbar">
+      <ul class="nav-links">
+        <li><a href="#" onclick="location.reload()">Home</a></li>
+        <li><a onclick="openListenModal()">Explore</a></li>
+        <li><a href="#" onclick="openUploadModal()">Upload</a></li>
+        <li><a href="#Albums">Album</a></li>
+
+      </ul>
+    </nav>
+    <div class="user-btn">
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle"><img src="Images/user (1).png" alt="user" class="usr-logo"> </a>
+        <ul class="dropdown-menu">
+          <li><a href="#" id="artistInfoLink">Your info</a></li> <!-- Corrected the link to trigger JS -->
+          <li><a href="#" onclick="openSettingsModal()">Settings</a></li>
+          <li><a href="index.html" id="logoutButton" class="btn-logout">Logout</a></li>
+      </li>
+      </ul>
+    </div>
+
+    <button class="menu-toggle" aria-label="Toggle Menu">☰</button>
+
+  </header>
+  <!-- Artist Info Modal -->
+  <div id="InfoModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeInfoModal()">&times;</span>
+      <h1>Artist Information</h1>
+      <ul id="InfoList" style="list-style-type: none;">
+        <!-- Dynamic content will be added here -->
+      </ul>
+    </div>
+  </div>
+  <!-- Carousel Container -->
+  <div class="carousel">
+    <!-- Left Arrow -->
+    <button id="prevBtn" class="carousel-arrow left-arrow">&#10094;</button>
+
+    <!-- Image Container -->
+    <div class="carousel-images">
+      <img src="Images/weeknd.png" class="carousel-image" alt="Image 2">
+      <img src="Images/arijit-singh-live-in-concert.png" class="carousel-image" alt="Image 1">
+      <img src="Images/Travis_Scott.jpg" class="carousel-image" alt="Image 3">
+      <img src="Images/afsanay.jpeg" class="carousel-image" alt="Image 3">
+    </div>
+
+    <!-- Right Arrow -->
+    <button id="nextBtn" class="carousel-arrow right-arrow">&#10095;</button>
+  </div>
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1 id="displayname"></h1>
+    <p>Your personal hub for royalty-free music and sound effects.</p>
+    <div class="search-bar">
+      <input type="text" placeholder="Search for your favorite tracks..." class="search-input">
+      <button class="btn btn-search">Search</button>
+    </div>
+  </section>
+
+  <!-- Music Gallery Section -->
+  <section class="features">
+    <div class="card" id="Albums">
+      <img src="Images/album.jpg" alt="Studio work">
+      <h3>Create Album</h3>
+      <p>Start creating your masterpiece by adding a new album.</p>
+    </div>
+    <div class="card" id="Explore">
+      <img src="Images/weeknd_card.jpg" alt="Microphone">
+      <h3>Artists</h3>
+      <p>Add cinematic sound effects to bring your content to life.</p>
+    </div>
+    <div class="card" id="Playlists">
+      <img src="Images/drake_card.jpeg" alt="Editing screen">
+      <h3>Create Playlists</h3>
+      <p>Create and manage playlists tailored to your needs.</p>
+    </div>
+    <div class="card" id="ListenCard" onclick="openListenModal()">
+      <img src="Images/eminem_card.jpeg" alt="Editing screen">
+      <h3>Listen</h3>
+      <p>Create and manage playlists tailored to your needs.</p>
+    </div>
+  </section>
+  <!-- Create Album Modal -->
+  <div id="createAlbumModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeCreateAlbumModal()">&times;</span>
+      <form id="createAlbumForm">
+        <h1>Create New Album</h1>
+        <div class="label-container">
+          <label for="albumTitle">Album Title:</label>
+          <input type="text" id="albumTitle" name="albumTitle" required>
+        </div>
+        <div class="label-container">
+          <label for="albumReleaseDate">Release Date:</label>
+          <input type="date" id="albumReleaseDate" name="albumReleaseDate" required>
+        </div>
+        <div class="button-container">
+          <button class="btn btn-submit info-btn" type="submit">Create Album</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Upload Modal -->
+  <div id="uploadModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeUploadModal()">&times;</span>
+      <form id="uploadSongForm">
+        <h1>Upload Song</h1>
+        <div class="label-container">
+          <label for="song_title">Song Title:</label>
+          <input type="text" id="song_title" name="song_title" maxlength="150" required>
+        </div>
+        <div class="label-container">
+          <label for="album_name">Album:</label>
+          <select id="album_name" name="album_name" class="select-genre"
+            style="margin: 0;  width: 70%; padding: 10px; max-width: 322px; font-size: 1rem;" required>
+            <option value="" disabled selected>Select Album</option>
+          </select>
+        </div>
+        <div class="label-container">
+          <label for="genre_name">Genre:</label>
+          <select id="genre_name_for_song" name="genre_name_for_song" class="select-genre"
+            style="margin: 0;  width: 70%; padding: 10px; font-size: 1rem;" required>
+            <option value="" disabled selected>Select Genre</option>
+          </select>
+        </div>
+        <div class="label-container">
+          <label for="language_name">Language:</label>
+          <select id="language_name" name="language_name" class="select-genre"
+            style="margin: 0;  width: 70%; padding: 10px; font-size: 1rem;" required>
+            <option value="" disabled selected>Select Language</option>
+          </select>
+        </div>
+        <div class="label-container">
+          <label for="song_link">Song Link (URL):</label>
+          <input type="url" id="song_link" name="song_link" maxlength="1000" required>
+        </div>
+        <div class="button-container">
+          <button class="btn btn-submit info-btn" type="submit">Upload Song</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div id="SettingsModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeSettingsModal()">&times;</span>
+      <h1>Edit Info</h1>
+      <div id="editArtistModal" style="display: none;">
+        <form id="editArtistForm">
+          <div class="label-container" style="padding: 0px;">
+            <label for="artist_email">Email:</label>
+            <input type="text" id="artist_email" name="artist_email" readonly />
+          </div>
+          <div class="label-container" style="padding: 0px;">
+            <label for="artist_username">Username:</label>
+            <input type="text" id="artist_username" name="artist_username" required />
+          </div>
+          <div class="label-container" style="padding: 0px;">
+            <label for="artist_name">Name:</label>
+            <input type="text" id="artist_name" name="artist_name" required />
+          </div>
+          <div class="label-container" style="padding: 0px;">
+            <label for="artist_country">Country:</label>
+            <input type="text" id="artist_country" name="artist_country" />
+          </div>
+          <div class="label-container" style="padding: 0px;">
+            <label for="artist_debutyear">Debut Year:</label>
+            <input type="number" id="artist_debutyear" name="artist_debutyear" required />
+          </div>
+          <div class="label-container" style="padding: 0px;">
+            <label for="artist_password">Password:</label>
+            <input type="text" id="artist_password" name="artist_password" required />
+          </div>
+          <div class="label-container" style="padding: 0px;">
+            <label for="genre_name">Genre:</label>
+            <select id="genre_name" name="genre_name" class="select-genre"
+              style="margin: 0; max-width: 354px; font-size: 1rem;" required>
+              <option value=""></option>
+            </select>
+          </div>
+          <div class="button-container" style="gap: 40px; margin-top: 20px;">
+            <button type="submit" class="submit-btn" style="background-color:#16bd56b9;">Save Changes</button>
+            <button id="deleteAccountBtn" class="submit-btn" type="button" style="background-color:#f44336;">Delete
+              Account</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="songDisplayModal"  style=" width: 100%;height: 100%;margin-top: 76px;">
+    <div class="modal-content" style="border-radius: 0 !important; width: 95%;height: 95%;">
+      <span class="close-btn" onclick="closeSongDisplayModal()">&times;</span>
+      <div class="search-sort-container">
+        <input type="text" id="searchBar" placeholder="Search songs...">
+        <select id="sortOptions">
+          <option value="song_title">Sort by Title</option>
+          <option value="album_name">Sort by Album</option>
+          <option value="genre_name">Sort by Genre</option>
+        </select>
+        <select id="genreOptions">
+          <option value="">Filter by Genre</option>
+          <!-- Options will be dynamically populated -->
+        </select>
+        <select id="languageOptions">
+          <option value="">Filter by Language</option>
+          <!-- Options will be dynamically populated -->
+        </select>
+      </div>
+      <div class="songs-list">
+        <div class="songs-header">
+          <div class="s-no" style="gap: 5%;">#</div>
+          <div class="song-details">
+            <div>Title</div>
+            <div>Artist</div>
+            <div>Album</div>
+            <div>Genre</div>
+            <div>Actions</div>
+          </div>
+        </div>
+        <div id="songsContainer" style="max-height: 400px;">
+          <div class="s-no" style="gap: 5%;">${index + 1}</div>
+          <div>${song.song_title}</div>
+          <div>${song.artist_name}</div>
+          <div>${song.album_name}</div>
+          <div>${song.genre_name}</div>
+          <div class="actions">
+            <button onclick="playSong('${song.song_link}')">Play</button>
+            <button onclick="editSong('${song.song_title}')">Edit</button>
+            <button onclick="deleteSong('${song.song_title}')">Delete</button>
+          </div>
+          <!-- Songs will be dynamically populated here -->
+        </div>
+      </div>
+      <div id="playSong" class="modal">
+        <div class="modal-content" style="width: 80%;">
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Song Modal -->
+  <div id="editSongModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeEditSongModal()">&times;</span>
+        <form id="editSongForm">
+            <h1>Edit Song</h1>
+            <div class="label-container">
+                <label for="edit_song_title">Song Title:</label>
+                <input type="text" id="edit_song_title" name="edit_song_title" maxlength="150" required>
+            </div>
+            <div class="label-container">
+                <label for="edit_album_name">Album:</label>
+                <select id="edit_album_name" name="edit_album_name" class="select-genre"style="margin: 0;  width: 70%; padding: 10px; max-width: 322px; font-size: 1rem;" required>
+                  <option value="" disabled selected></option>
+                    <!-- Options will be dynamically populated -->
+                </select>
+            </div>
+            <div class="label-container">
+                <label for="edit_genre_name_for_song">Genre:</label>
+                <select id="edit_genre_name_for_song" name="edit_genre_name_for_song" class="select-genre" style="margin: 0;  width: 70%; padding: 10px; max-width: 322px; font-size: 1rem;" required>
+                  <option value="" disabled selected></option>
+                    <!-- Options will be dynamically populated -->
+                </select>
+            </div>
+            <div class="label-container">
+                <label for="edit_language_name">Language:</label>
+                <select id="edit_language_name" name="edit_language_name" class="select-genre" style="margin: 0;  width: 70%; padding: 10px; max-width: 322px; font-size: 1rem;" required>
+                    <option value="" disabled selected></option>
+                    <!-- Options will be dynamically populated -->
+                </select>
+            </div>
+            <div class="label-container">
+                <label for="edit_song_link">Song Link (URL):</label>
+                <input type="url" id="edit_song_link" name="edit_song_link" maxlength="1000" required>
+            </div>
+            <div class="button-container">
+                <button class="btn btn-submit info-btn" type="submit">Save Changes</button>
+            </div>
+        </form>
+    </div>
+  </div>
+
+  <!-- Success Message Modal -->
+  <div class="modal" id="successModal">
+    <div class="modal-content success-content glass-effect">
+      <span class="close-btn" id="closeSuccessModal" onclick="closeModals('successModal')">&times;</span>
+      <h1 id="successTitle">Success!</h1>
+      <p id="successMessage">Your operation was successful.</p>
+    </div>
+  </div>
+
+  <!-- Failure Message Modal -->
+  <div class="modal" id="failureModal">
+    <div class="modal-content glass-effect">
+      <span class="close-btn" id="closeFailureModal" onclick="closeModals('failureModal')">&times;</span>
+      <h1 id="failureTitle">Failed!</h1>
+      <p id="failureMessage">Something went wrong. Please try again.</p>
+      <button class="btn-retry" id="retryButton">Retry</button>
+    </div>
+  </div>
+
+  <div class="modal" id="modal" style="align-content: center;">
+    <div class="song-modal" style="display: inline-flex;">
+      <button id="open-modal" class="btn">Open Modal</button>
+      <label for="song_title">Song Title</label>
+      <label for="artist_name">Artist</label>
+      <label for="album_name">Album</label>
+      <button>Edit</button>
+      <button>Delete</button>
+    </div>
+  </div>
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2024 MusicLoud. All Rights Reserved.</p>
+    <nav class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Contact Us</a>
+    </nav>
+  </footer>
+
+  <script src="Scripts/common.js"></script>
+  <script src="Scripts/artistscript.js"></script>
+  <script src="Scripts/songs.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musicloud</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Styles/generalstyle.css">
+    <link rel="stylesheet" href="Styles/style.css">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <img class="logo" src="Images/musicloud.png">
+        <div class="navbar">
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" onclick="location.reload()">Home</a></li>
+                <li><a onclick="openSigninModal()">Explore</a></li>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#aboutUsSection">About Us</a></li>
+            </ul>
+        </div>
+        <div class="auth-buttons">
+            <button class="btn btn-sign-in">Sign In</button>
+            <button class="btn btn-sign-up">Sign Up</button>
+        </div>
+        <button class="menu-toggle" aria-label="Toggle Menu">☰</button>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>The best royalty-free music for every project</h1>
+            <a class="btn btn-sign-up-hero" href="#" onclick="openSignupModal()">Sign up for free →</a>
+            <div class="search-bar">
+                <input type="text" placeholder="Search our music library..." class="search-input">
+                <button class="btn btn-search" onclick="openSigninModal()">Search</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal" onclick="closeSignupModal()">&times;</span>
+            <div id="step1" class="signup-step">
+                <h1>Select Your Role</h1>
+                <button class="role-btn" data-role="artist">I am an Artist</button>
+                <button class="role-btn" data-role="user">I am a User</button>
+            </div>
+            <div id="step2" class="signup-step hidden">
+                <h1>Account Details</h1>
+                <form id="signupForm">
+                    <input type="email" name="email" placeholder="Email" required>
+                    <div class="button-container">
+                        <button type="button" class="btn back-btn info-btn" onclick="goToPreviousStep(1)">Back</button>
+                        <button type="submit" class="btn submit-btn info-btn">Next</button>
+                    </div>
+                </form>
+            </div>
+            <div id="step3" class="signup-step hidden">
+                <h1 class="step-header">🎵 Verify Your OTP</h1>
+                <p class="step-subtext">Enter the OTP we sent to your email to complete the process.</p>
+                <input type="text" id="otp" class="input-field" placeholder="Enter OTP" required>
+                <div class="button-container">
+                    <button type="button" class="btn info-btn back-btn" onclick="goToPreviousStep(2)">Back</button>
+                    <button class="btn btn-submit info-btn" id="verifyOtp">Verify</button>
+                </div>
+            </div>
+            <div id="step4" class="signup-step hidden">
+                <h1>Personal Info</h1>
+                <form id="roleInfoForm">
+                    <!-- Artist Fields -->
+                    <div id="artistFields" class="role-specific hidden">
+                        <input type="text" name="name" placeholder="Name" required>
+                        <input type="text" name="artist_username" placeholder="Username" required>
+                        <select name="genre" class="select-genre" required>
+                            <option value="" disabled selected>Select Genre</option>
+                        </select>
+                        <input type="text" name="debutyear" placeholder="Debut Year" required>
+                        <input type="text" name="country" placeholder="Country" required>
+                        <input type="password" name="artist_password" placeholder="Password" required>
+                        <input type="password" name="artist_confirmpassword" placeholder="Confirm Password" required>
+                    </div>
+                    <!-- User Fields -->
+                    <div id="userFields" class="role-specific hidden">
+                        <input type="text" name="user_firstname" placeholder="First Name" required>
+                        <input type="text" name="user_lastname" placeholder="Last Name" required>
+                        <input type="text" name="user_username" placeholder="Username" required>
+                        <input type="password" name="user_password" placeholder="Password" required>
+                        <input type="password" name="user_confirmpassword" placeholder="Confirm Password" required>
+                    </div>
+                    <input type="hidden" id="role" name="role">
+                    <div class="button-container">
+                        <button type="button" class="btn back-btn info-btn" onclick="goToPreviousStep(2)">Back</button>
+                        <button type="submit" class="btn submit-btn info-btn">Finish</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sign In Modal -->
+    <div id="signinModal" class="modal">
+        <div class="modal-content">
+            <span id="closeSigninModal" class="close-btn" onclick="closeSigninModal()">&times;</span>
+            <h2>Sign In</h2>
+            <form id="signinForm">
+                <input type="text" name="username" placeholder="Username or Email" required autocomplete="off" />
+                <input type="password" name="password" placeholder="Password" required autocomplete="off" />
+                <div class="role-selection">
+                    <label>
+                        <input type="radio" name="role" value="user" required />
+                        User
+                    </label>
+                    <label>
+                        <input type="radio" name="role" value="artist" required />
+                        Artist
+                    </label>
+                </div>
+                <p id="dhaa" onclick="openSignupModal()">Don't have any account?</p>
+                <button type="submit" class="submit-btn btn info-btn">Sign in</button>
+            </form>
+        </div>
+    </div>
+    <!-- Sign Up Success Message Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content success-content glass-effect">
+            <span class="close-btn" id="closeSuccessModal">&times;</span>
+            <h1>Account Created Successfully!</h1>
+            <p>Welcome to MusicLoud! You can now sign in and start exploring.</p>
+            <button class="btn btn-success" id="goToSignin" onclick="openSigninModal()">Go to Sign In Page</button>
+        </div>
+    </div>
+    <!-- Sign In Success Message Modal -->
+    <div class="modal" id="signin-successModal">
+        <div class="modal-content success-content glass-effect">
+            <span class="close-btn" id="closeSuccessModal">&times;</span>
+            <h1>Sign In Successfully!</h1>
+            <p>Welcome to MusicLoud!</p>
+        </div>
+    </div>
+    <!-- OTP Success Message Modal -->
+    <div class="modal" id="otp-successModal">
+        <div class="modal-content success-content glass-effect">
+            <h1 id="otp-message"></h1>
+        </div>
+    </div>
+    <!-- Failure Message Modal -->
+    <div class="modal" id="failureModal">
+        <div class="modal-content failure-content glass-effect">
+            <span class="close-btn" id="closeFailureModal">&times;</span>
+            <h1>Account Creation Failed!</h1>
+            <p>We encountered an issue while creating your account. Please try again.</p>
+            <button class="btn btn-failure" id="retrySignup">Retry</button>
+        </div>
+    </div>
+    <!-- Validation Error Modal -->
+    <div class="modal" id="validationErrorModal">
+        <div class="modal-content glass-effect">
+            <span class="close-btn" id="closeValidationErrorModal">&times;</span>
+            <h1>Invalid Input</h1>
+            <p id="validationErrorMessage">Please ensure all fields are filled correctly.</p>
+            <button class="btn btn-retry" id="retryValidation">Retry</button>
+        </div>
+    </div>
+
+    <section class="features">
+        <div class="card">
+            <img src="Images/image1.jpg" alt="Studio work">
+            <h3>Explore Top Music</h3>
+            <p>Find the perfect tracks to complement your projects.</p>
+        </div>
+        <div class="card">
+            <img src="Images/image2.jpg" alt="Microphone">
+            <h3>Sound Effects</h3>
+            <p>Add cinematic sound effects to bring your content to life.</p>
+        </div>
+        <div class="card">
+            <img src="Images/image3.jpg" alt="Editing screen">
+            <h3>Custom Playlists</h3>
+            <p>Create and manage playlists tailored to your needs.</p>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section class="about-us" id="aboutUsSection">
+        <h2>About Us</h2>
+        <div class="team">
+            <div class="team-member">
+                <div> <img src="Images/person1.jpg" alt="Faraz Ahmed"></div>
+                <div>
+                    <h1>Faraz Ahmed</h1>
+                    <p >Faraz Ahmed is a passionate developer who played a crucial role in
+                        the
+                        project by developing the sign-in and sign-up forms. He worked on both the UI and backend,
+                        ensuring
+                        a seamless user authentication process. His dedication to delivering a user-friendly experience
+                        and
+                        a secure login system was instrumental in the success of this project.</p>
+                </div>
+            </div>
+            <div class="team-member">
+                <div><img style="height: 305px; width: 265px;" src="Images/person2.jpg" alt="Abdul Raheem"></div>
+                <div>
+                    <h1>Abdul Raheem</h1>
+                    <p >Abdul Raheem is a passionate developer who developed the show info
+                        and
+                        edit info features in the project. His contribution spanned both the UI and backend, allowing
+                        users
+                        to view and update their personal information with ease. Abdul Raheem focuses on functionality
+                        and
+                        usability helped enhance the overall user experience.</p>
+                </div>
+            </div>
+            <div class="team-member">
+                <div><img style="height: 305px; width: 265px;" src="Images/person3.jpg" alt="Muhammad Raza">
+                </div>
+                <div>
+                    <h1>Muhammad Raza</h1>
+                    <p >Muhammad Raza is a passionate developer who developed the songs
+                        section in the project. This feature allows users to search, sort, filter, listen to songs, and
+                        create playlists. He also designed the artist's section where they can upload, edit, search,
+                        sort, filter, and listen to songs, as well as create albums. Muhammad Raza work on both the UI
+                        and backend was critical in creating an interactive and engaging music experience for users.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 MusicLoud. All Rights Reserved.</p>
+        <nav class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact Us</a>
+        </nav>
+    </footer>
+
+    <script src="Scripts/script.js"></script>
+</body>
+
+</html>
